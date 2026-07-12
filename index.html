@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desempenho do Brasil nas Copas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="placar">
+  <div class="placar__ficha">
+    <span class="placar__etiqueta">Trabalho Final · Estrutura de Dados</span>
+    <h1 class="placar__titulo">Desempenho do Brasil<br>nas Copas do Mundo</h1>
+  </div>
+  <div class="placar__digitos" id="placar-digitos">
+    <div class="digito">
+      <span class="digito__numero" id="stat-titulos">5</span>
+      <span class="digito__legenda">Títulos</span>
+    </div>
+    <div class="digito">
+      <span class="digito__numero" id="stat-copas">—</span>
+      <span class="digito__legenda">Copas disputadas</span>
+    </div>
+    <div class="digito">
+      <span class="digito__numero" id="stat-jogos">—</span>
+      <span class="digito__legenda">Jogos</span>
+    </div>
+    <div class="digito">
+      <span class="digito__numero" id="stat-gols">—</span>
+      <span class="digito__legenda">Gols marcados</span>
+    </div>
+  </div>
+</header>
+
+<nav class="ingressos" id="tabs">
+  <button class="ingresso is-ativo" data-aba="consultas">
+    <span class="ingresso__numero">01</span> Consultas
+  </button>
+  <button class="ingresso" data-aba="analises">
+    <span class="ingresso__numero">02</span> Análises
+  </button>
+  <button class="ingresso" data-aba="copas">
+    <span class="ingresso__numero">03</span> Copas
+  </button>
+  <button class="ingresso" data-aba="partidas">
+    <span class="ingresso__numero">04</span> Partidas
+  </button>
+</nav>
+
+<main>
+
+  <!-- ABA 1: CONSULTAS -->
+  <section class="aba is-visivel" id="aba-consultas">
+    <div class="cartao">
+      <h2>Ver detalhes de uma Copa</h2>
+      <div class="linha-form">
+        <select id="select-detalhe-ano"></select>
+        <button class="botao botao--principal" id="btn-detalhe">Consultar</button>
+      </div>
+      <div class="resultado" id="saida-detalhe"></div>
+    </div>
+
+    <div class="cartao">
+      <h2>Todas as participações</h2>
+      <div id="lista-copas" class="tabela-copas"></div>
+    </div>
+
+    <div class="cartao">
+      <h2>Eliminações</h2>
+      <div id="lista-eliminacoes" class="tabela-copas"></div>
+    </div>
+  </section>
+
+  <!-- ABA 2: ANALISES -->
+  <section class="aba" id="aba-analises">
+    <div class="cartao">
+      <h2>Ranking de artilheiros</h2>
+      <ol class="ranking" id="lista-ranking"></ol>
+    </div>
+
+    <div class="cartao">
+      <h2>Comparar duas Copas</h2>
+      <div class="linha-form">
+        <select id="select-comparar-1"></select>
+        <select id="select-comparar-2"></select>
+        <button class="botao botao--principal" id="btn-comparar">Comparar</button>
+      </div>
+      <div class="resultado" id="saida-comparar"></div>
+    </div>
+  </section>
+
+  <!-- ABA 3: COPAS (cadastro / atualizacao) -->
+  <section class="aba" id="aba-copas">
+    <div class="cartao">
+      <h2>Cadastrar nova Copa</h2>
+      <form id="form-cadastrar-copa" class="grade-form">
+        <label>Ano <input type="number" id="c-ano" required></label>
+        <label>Sede <input type="text" id="c-sede" required></label>
+        <label>Resultado <input type="text" id="c-resultado" required placeholder="ex.: Campeão"></label>
+        <label>Jogos <input type="number" id="c-jogos" required></label>
+        <label>Vitórias <input type="number" id="c-vitorias" required></label>
+        <label>Empates <input type="number" id="c-empates" required></label>
+        <label>Derrotas <input type="number" id="c-derrotas" required></label>
+        <label>Gols pró <input type="number" id="c-gols-pro" required></label>
+        <label>Gols contra <input type="number" id="c-gols-contra" required></label>
+        <label>Eliminado na <input type="text" id="c-eliminado" placeholder="deixe vazio se foi campeão"></label>
+        <button class="botao botao--principal" type="submit">Cadastrar</button>
+      </form>
+      <div class="resultado" id="saida-cadastrar-copa"></div>
+    </div>
+
+    <div class="cartao">
+      <h2>Atualizar Copa existente</h2>
+      <div class="linha-form">
+        <select id="select-atualizar-ano"></select>
+        <select id="select-atualizar-campo">
+          <option value="sede">sede</option>
+          <option value="resultado">resultado</option>
+          <option value="jogos">jogos</option>
+          <option value="vitorias">vitorias</option>
+          <option value="empates">empates</option>
+          <option value="derrotas">derrotas</option>
+          <option value="gols_pro">gols_pro</option>
+          <option value="gols_contra">gols_contra</option>
+          <option value="eliminado_na">eliminado_na</option>
+        </select>
+        <input type="text" id="atualizar-valor" placeholder="Novo valor">
+        <button class="botao botao--principal" id="btn-atualizar-copa">Atualizar</button>
+      </div>
+      <div class="resultado" id="saida-atualizar-copa"></div>
+    </div>
+  </section>
+
+  <!-- ABA 4: PARTIDAS -->
+  <section class="aba" id="aba-partidas">
+    <div class="cartao">
+      <h2>Cadastrar partida</h2>
+      <form id="form-cadastrar-partida" class="grade-form">
+        <label>Ano <input type="number" id="p-ano" required></label>
+        <label>Fase <input type="text" id="p-fase" required placeholder="ex.: Final"></label>
+        <label>Adversário <input type="text" id="p-adversario" required></label>
+        <label>Gols Brasil <input type="number" id="p-gols-brasil" required></label>
+        <label>Gols adversário <input type="number" id="p-gols-adversario" required></label>
+        <button class="botao botao--principal" type="submit">Cadastrar</button>
+      </form>
+      <div class="resultado" id="saida-cadastrar-partida"></div>
+    </div>
+
+    <div class="cartao">
+      <h2>Partidas cadastradas</h2>
+      <div id="lista-partidas" class="tabela-copas"></div>
+      <div class="linha-form">
+        <select id="select-remover-partida"></select>
+        <button class="botao botao--perigo" id="btn-remover-partida">Remover</button>
+      </div>
+      <div class="resultado" id="saida-remover-partida"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <p>Front estático (HTML/CSS/JS) — vitrine do projeto. A lógica avaliada em dicionários está em <code>copa_brasil.py</code>. Dados reiniciam a cada recarregamento da página.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
