@@ -1,16 +1,8 @@
-/*
- * Desempenho do Brasil nas Copas do Mundo — front estatico
- *
- * Este arquivo espelha, em JavaScript, a mesma modelagem de dados do
- * backend em Python (copa_brasil.py): objetos usados como "dicionarios".
- *   - copasBrasil: { ano -> dados da participacao }      (chave: ano)
- *   - artilheirosBrasil: { nome -> dados do artilheiro }  (chave: nome)
- *   - partidasBrasil: array de registros com chave composta
- *     { ano, fase, adversario } representada como string "ano|fase|adversario"
- *
- * Este arquivo NAO substitui o backend Python entregue como trabalho;
- * serve apenas como vitrine visual do projeto para o GitHub Pages / navegador.
- */
+// ============================================
+// DADOS BRASILEIROS NAS COPAS DO MUNDO
+// ============================================
+// Estrutura de armazenamento: dicionários (objetos) com os mesmos dados
+// que estão no backend Python, mas aqui representados em JavaScript.
 
 let copasBrasil = {
   1950: { sede: "Brasil", resultado: "Vice-campeao", jogos: 6, vitorias: 4, empates: 1, derrotas: 1, gols_pro: 14, gols_contra: 5, eliminado_na: "Final" },
@@ -33,6 +25,7 @@ let copasBrasil = {
   2022: { sede: "Catar", resultado: "Quartas de final", jogos: 5, vitorias: 4, empates: 1, derrotas: 0, gols_pro: 12, gols_contra: 2, eliminado_na: "Quartas de final" },
 };
 
+// Maiores artilheiros do Brasil em Copas do Mundo
 const artilheirosBrasil = {
   "Pele": { gols_total: 12, gols_por_copa: { 1958: 6, 1962: 1, 1970: 4, 1966: 1 } },
   "Ronaldo": { gols_total: 15, gols_por_copa: { 1998: 4, 2002: 8, 2006: 3 } },
@@ -44,6 +37,7 @@ const artilheirosBrasil = {
   "Tostao": { gols_total: 5, gols_por_copa: { 1970: 5 } },
 };
 
+// Partidas históricas do Brasil em Copas do Mundo
 let partidasBrasil = [
   { ano: 1950, fase: "Final", adversario: "Uruguai", placar_brasil: 1, placar_adversario: 2, resultado: "Derrota" },
   { ano: 1958, fase: "Final", adversario: "Suecia", placar_brasil: 5, placar_adversario: 2, resultado: "Vitoria" },
@@ -56,34 +50,40 @@ let partidasBrasil = [
   { ano: 2022, fase: "Quartas de final", adversario: "Croacia", placar_brasil: 1, placar_adversario: 1, resultado: "Derrota (penaltis)" },
 ];
 
-/* --------------------------------------------------------------------
-   Funcoes de consulta / analise (leem os "dicionarios" acima)
------------------------------------------------------------------------ */
+// ============================================
+// FUNÇÕES DE CONSULTA E ANÁLISE
+// ============================================
 
+// Retorna todos os anos em ordem crescente
 function anosOrdenados() {
   return Object.keys(copasBrasil).map(Number).sort((a, b) => a - b);
 }
 
+// Conta quantos títulos mundiais o Brasil ganhou
 function totalTitulos() {
   return anosOrdenados().filter(ano => copasBrasil[ano].resultado === "Campeao");
 }
 
+// Soma total de jogos disputados em todas as Copas
 function totalJogos() {
   return anosOrdenados().reduce((soma, ano) => soma + copasBrasil[ano].jogos, 0);
 }
 
+// Soma total de gols marcados em todas as Copas
 function totalGolsPro() {
   return anosOrdenados().reduce((soma, ano) => soma + copasBrasil[ano].gols_pro, 0);
 }
 
+// Gera chave única para identificar uma partida (ano|fase|adversario)
 function chavePartida(p) {
   return `${p.ano}|${p.fase}|${p.adversario}`;
 }
 
-/* --------------------------------------------------------------------
-   Renderizacao
------------------------------------------------------------------------ */
+// ============================================
+// FUNÇÕES DE RENDERIZAÇÃO
+// ============================================
 
+// Preenche um <select> com opções e formatação opcional
 function preencherSelect(select, opcoes, formatador) {
   select.innerHTML = "";
   opcoes.forEach(opcao => {
@@ -94,6 +94,7 @@ function preencherSelect(select, opcoes, formatador) {
   });
 }
 
+// Atualiza os números do placar no header (títulos, copas, jogos, gols)
 function atualizarPlacarHeader() {
   document.getElementById("stat-titulos").textContent = totalTitulos().length;
   document.getElementById("stat-copas").textContent = anosOrdenados().length;
@@ -101,6 +102,7 @@ function atualizarPlacarHeader() {
   document.getElementById("stat-gols").textContent = totalGolsPro();
 }
 
+// Renderiza a lista de todas as participações do Brasil nas Copas
 function renderizarListaCopas() {
   const container = document.getElementById("lista-copas");
   container.innerHTML = "";
@@ -118,6 +120,7 @@ function renderizarListaCopas() {
   });
 }
 
+// Renderiza apenas as Copas em que o Brasil foi eliminado
 function renderizarEliminacoes() {
   const container = document.getElementById("lista-eliminacoes");
   container.innerHTML = "";
@@ -135,6 +138,7 @@ function renderizarEliminacoes() {
   });
 }
 
+// Renderiza o ranking dos maiores artilheiros brasileiros em Copas
 function renderizarRanking() {
   const lista = document.getElementById("lista-ranking");
   lista.innerHTML = "";
@@ -146,6 +150,7 @@ function renderizarRanking() {
   });
 }
 
+// Renderiza a tabela de partidas cadastradas
 function renderizarPartidas() {
   const container = document.getElementById("lista-partidas");
   container.innerHTML = "";
@@ -169,6 +174,7 @@ function renderizarPartidas() {
   );
 }
 
+// Atualiza todos os dropdowns com a lista de anos
 function atualizarTodosOsSelects() {
   const anos = anosOrdenados();
   preencherSelect(document.getElementById("select-detalhe-ano"), anos);
@@ -177,6 +183,7 @@ function atualizarTodosOsSelects() {
   preencherSelect(document.getElementById("select-atualizar-ano"), anos);
 }
 
+// Atualiza todas as visualizações (placar, listas, selects)
 function atualizarTudo() {
   atualizarPlacarHeader();
   renderizarListaCopas();
@@ -186,23 +193,28 @@ function atualizarTudo() {
   atualizarTodosOsSelects();
 }
 
-/* --------------------------------------------------------------------
-   Navegacao entre abas
------------------------------------------------------------------------ */
+// ============================================
+// NAVEGAÇÃO ENTRE ABAS
+// ============================================
 
 document.getElementById("tabs").addEventListener("click", (evento) => {
   const botao = evento.target.closest(".ingresso");
   if (!botao) return;
+  // Remove a classe "ativo" de todos os botões
   document.querySelectorAll(".ingresso").forEach(b => b.classList.remove("is-ativo"));
+  // Esconde todas as abas
   document.querySelectorAll(".aba").forEach(a => a.classList.remove("is-visivel"));
+  // Marca o botão clicado como ativo
   botao.classList.add("is-ativo");
+  // Mostra a aba correspondente
   document.getElementById(`aba-${botao.dataset.aba}`).classList.add("is-visivel");
 });
 
-/* --------------------------------------------------------------------
-   Consultas
------------------------------------------------------------------------ */
+// ============================================
+// CONSULTAS (Ver detalhes, comparar)
+// ============================================
 
+// Exibe detalhes completos de uma Copa específica
 document.getElementById("btn-detalhe").addEventListener("click", () => {
   const ano = Number(document.getElementById("select-detalhe-ano").value);
   const dados = copasBrasil[ano];
@@ -223,10 +235,7 @@ Gols contra     : ${dados.gols_contra}
 Eliminado na    : ${dados.eliminado_na || "Nao foi eliminado (foi campeao)"}`;
 });
 
-/* --------------------------------------------------------------------
-   Analises
------------------------------------------------------------------------ */
-
+// Compara estatísticas de duas Copas diferentes
 document.getElementById("btn-comparar").addEventListener("click", () => {
   const ano1 = Number(document.getElementById("select-comparar-1").value);
   const ano2 = Number(document.getElementById("select-comparar-2").value);
@@ -248,10 +257,11 @@ document.getElementById("btn-comparar").addEventListener("click", () => {
   saida.textContent = texto;
 });
 
-/* --------------------------------------------------------------------
-   Cadastrar / atualizar Copa
------------------------------------------------------------------------ */
+// ============================================
+// CADASTRO E ATUALIZAÇÃO DE COPAS
+// ============================================
 
+// Cadastra uma nova Copa na base de dados
 document.getElementById("form-cadastrar-copa").addEventListener("submit", (evento) => {
   evento.preventDefault();
   const ano = Number(document.getElementById("c-ano").value);
@@ -279,6 +289,7 @@ document.getElementById("form-cadastrar-copa").addEventListener("submit", (event
   atualizarTudo();
 });
 
+// Atualiza um campo específico de uma Copa já cadastrada
 document.getElementById("btn-atualizar-copa").addEventListener("click", () => {
   const ano = Number(document.getElementById("select-atualizar-ano").value);
   const campo = document.getElementById("select-atualizar-campo").value;
@@ -290,6 +301,7 @@ document.getElementById("btn-atualizar-copa").addEventListener("click", () => {
     return;
   }
 
+  // Campos numéricos devem ser convertidos para número
   const camposNumericos = ["jogos", "vitorias", "empates", "derrotas", "gols_pro", "gols_contra"];
   let valor = valorBruto;
   if (camposNumericos.includes(campo)) {
@@ -307,10 +319,11 @@ document.getElementById("btn-atualizar-copa").addEventListener("click", () => {
   atualizarTudo();
 });
 
-/* --------------------------------------------------------------------
-   Cadastrar / remover partida
------------------------------------------------------------------------ */
+// ============================================
+// CADASTRO E REMOÇÃO DE PARTIDAS
+// ============================================
 
+// Cadastra uma nova partida no histórico
 document.getElementById("form-cadastrar-partida").addEventListener("submit", (evento) => {
   evento.preventDefault();
   const ano = Number(document.getElementById("p-ano").value);
@@ -326,6 +339,7 @@ document.getElementById("form-cadastrar-partida").addEventListener("submit", (ev
     return;
   }
 
+  // Define o resultado baseado no placar
   let resultado = "Empate";
   if (placar_brasil > placar_adversario) resultado = "Vitoria";
   else if (placar_brasil < placar_adversario) resultado = "Derrota";
@@ -336,6 +350,7 @@ document.getElementById("form-cadastrar-partida").addEventListener("submit", (ev
   atualizarTudo();
 });
 
+// Remove uma partida do histórico
 document.getElementById("btn-remover-partida").addEventListener("click", () => {
   const chave = document.getElementById("select-remover-partida").value;
   const saida = document.getElementById("saida-remover-partida");
@@ -347,8 +362,9 @@ document.getElementById("btn-remover-partida").addEventListener("click", () => {
   atualizarTudo();
 });
 
-/* --------------------------------------------------------------------
-   Inicializacao
------------------------------------------------------------------------ */
+// ============================================
+// INICIALIZAÇÃO
+// ============================================
 
+// Atualiza todo o conteúdo da página ao carregar
 atualizarTudo();
