@@ -92,6 +92,4 @@ recarregamento da página.
 Ferramenta utilizada: Claude (Anthropic), para apoio na estruturação do
 código, geração de exemplos de interface e revisão de organização.
 
-*(Complete esta seção com suas próprias palavras antes da entrega, conforme
-pede o enunciado: quais partes você escreveu, testou, modificou ou rejeitou,
-e o que aprendeu no processo.)*
+Escrevi a lógica principal baseada em dicionários e estruturas de dados em Python, com uma pequena interface para melhor visualização, além de modificar e ajustar os estilos visuais do front-end no arquivo `script.js`. Realizei testes manuais inserindo dados inválidos no terminal para garantir o tratamento de erros e testei exaustivamente a integração de código via Git para solucionar conflitos de mesclagem entre o ambiente local e o GitHub. No processo, aprendi a resolver conflitos complexos de versionamento e a estruturar melhor dados aninhados para buscas rápidas.
